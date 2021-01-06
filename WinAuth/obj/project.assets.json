@@ -642,11 +642,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\WinAuth\\WinAuth.csproj",
+      "projectUniqueName": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\WinAuth\\WinAuth.csproj",
       "projectName": "WinAuth",
-      "projectPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\WinAuth\\WinAuth.csproj",
+      "projectPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\WinAuth\\WinAuth.csproj",
       "packagesPath": "C:\\Users\\eren.murat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\WinAuth\\obj\\",
+      "outputPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\WinAuth\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -667,8 +667,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\DataAccess\\DataAccess.csproj"
+            "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\DataAccess.csproj"
             }
           }
         }

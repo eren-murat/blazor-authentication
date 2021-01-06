@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LIqw+JNh5JJ6LRgK0VoECUTaNqGWBBJtHHwsNEL9Z7d/SiFHoppiaUbKE3lSJurAc7OOW+/i6NKbE4yCQGhTkg==",
+  "dgSpecHash": "BuwvSJc7MD9dLM4FrLzH/vZU+XRYnKbu5L0IR89FtegEQy1c6q1r61kBG0QvBPa8hXWfW95uqnbzv7shL+Y+kg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eren.murat\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
     "C:\\Users\\eren.murat\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",

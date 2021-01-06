@@ -1,0 +1,9 @@
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\bin\Release\netstandard2.0\DataAccess.deps.json
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\bin\Release\netstandard2.0\DataAccess.dll
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\bin\Release\netstandard2.0\DataAccess.pdb
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.csprojAssemblyReference.cache
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.AssemblyInfo.cs
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.dll
+C:\Users\eren.murat\source\repos\WinAuth\blazor-app\DataAccess\obj\Release\netstandard2.0\DataAccess.pdb
