@@ -1,0 +1,39 @@
+﻿@using DataAccess.Models 
+
+<div id="@Item.ProprietatiControl.IdHtml" class="item-control"
+     style="
+        width: @Item.ProprietatiControl.Width;
+        height: @Item.ProprietatiControl.Height;
+        top: @Item.ProprietatiControl.TopOffset;
+        left: @Item.ProprietatiControl.LeftOffset;
+        background-color: @Item.ProprietatiControl.Color;
+        border: @Item.ProprietatiControl.Border;
+        font-size: @Item.ProprietatiControl.FontSize;" >
+    @if (Item.Tip == "VARCHAR(255)")
+    {
+        <input class="input-group-sm" type="text" @bind="@Item.ValoareString" required/>
+    }
+    else if (Item.Tip == "DATETIME")
+    {
+        <input type="date" @bind="@Item.ValoareData" required min="1900-01-01" max="2050-12-31" />
+    }
+    else if (Item.Tip == "INT")
+    {
+        <select class="custom-select-sm" @bind="@Item.ValoareInt">
+            @foreach (var option in Item.Valori)
+            {
+                <option>@option</option>
+            }
+        </select>
+    }
+    else
+    {
+        <input type="button" value="More" />
+    }
+
+</div>
+
+@code {
+    [Parameter]
+    public ObjModExtended Item { get; set; }
+}

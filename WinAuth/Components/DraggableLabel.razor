@@ -1,0 +1,18 @@
+﻿@using DataAccess.Models
+
+<div id="@Item.ProprietatiLabel.IdHtml" class="item-label"
+     style="
+        width: @Item.ProprietatiLabel.Width;
+        height: @Item.ProprietatiLabel.Height;
+        top: @Item.ProprietatiLabel.TopOffset;
+        left: @Item.ProprietatiLabel.LeftOffset;
+        background-color: @Item.ProprietatiLabel.Color;
+        border: @Item.ProprietatiLabel.Border;
+        font-size: @Item.ProprietatiLabel.FontSize;">
+    @Item.Simbol
+</div>
+
+@code {
+    [Parameter]
+    public ObjModExtended Item { get; set; }
+}
