@@ -1105,11 +1105,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\eren.murat\\source\\repos\\blazor-app\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\DataAccess.csproj",
+      "projectPath": "C:\\Users\\eren.murat\\source\\repos\\blazor-app\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\eren.murat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eren.murat\\source\\repos\\WinAuth\\blazor-app\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\eren.murat\\source\\repos\\blazor-app\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

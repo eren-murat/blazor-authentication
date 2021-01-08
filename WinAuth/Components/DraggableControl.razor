@@ -19,11 +19,15 @@
     }
     else if (Item.Tip == "INT")
     {
-        <select class="custom-select-sm" @bind="@Item.ValoareInt" style="width: 100%;" >
+        <select class="custom-select-sm" @bind="@Item.ValoareInt" style="width: 100%;">
+        @if (Item.Valori != null)
+        {
             @foreach (var option in Item.Valori)
             {
                 <option>@option</option>
             }
+        }
+
         </select>
     }
     else

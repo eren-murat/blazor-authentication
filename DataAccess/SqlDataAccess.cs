@@ -187,5 +187,21 @@ namespace DataAccess
 
 			return true;
 		}
+
+		public async Task<User> GetSqlUsername()
+		{
+			string connectionString = _config.GetConnectionString(ConnectionStringName);
+
+			IEnumerable<User> users;
+
+			using (IDbConnection connection = new SqlConnection(connectionString))
+			{
+				const string sql = "SELECT SUSER_NAME() as Username";
+
+				users = await connection.QueryAsync<User>(sql, new { });
+			}
+
+			return users.ToList().ElementAt(0);
+		}
 	}
 }

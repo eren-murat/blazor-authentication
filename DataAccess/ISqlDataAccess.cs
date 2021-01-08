@@ -23,5 +23,7 @@ namespace DataAccess
 		Task<Properties> GetControlPropertyByID(int id);
 
 		void UpdateControlProperty(Properties properties, int id);
+
+		Task<User> GetSqlUsername();
 	}
 }

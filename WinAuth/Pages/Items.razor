@@ -21,6 +21,12 @@ else
     <input type="button" @onclick="SaveAllComponents" value="Save" />
     <input type="button" @onclick="ResetAllPositions" value="Reset Positions" />
 
+    <div style="margin-top: 5px;">
+        <p>
+            username: <strong>@user.Username</strong>
+        </p>
+    </div>
+
     @if (itemCreation is true)
     {
         <div class="item-creation-form">
@@ -188,6 +194,8 @@ else
 
     private ObjModExtended newComponent = new ObjModExtended();
 
+    private User user = new User();
+
     private bool itemCreation = false;
 
     private List<string> dataTypes = new List<string> { "INT", "VARCHAR(255)", "DATETIME", "other..." };
@@ -222,6 +230,8 @@ else
 
             rows.Add(temp);
         }
+
+        user = await SqlDataAccess.GetSqlUsername();
 
         editable = true;
     }
