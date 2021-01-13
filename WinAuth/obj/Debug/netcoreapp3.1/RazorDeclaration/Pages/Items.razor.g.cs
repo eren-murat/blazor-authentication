@@ -27,13 +27,6 @@ using Microsoft.AspNetCore.Authorization;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
-using Microsoft.AspNetCore.Components.Authorization;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 4 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -96,6 +89,27 @@ using WinAuth.Components;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 6 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
+using System.Security.Principal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
+using Microsoft.AspNetCore.Components.Authorization;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/items")]
     public partial class Items : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -105,7 +119,7 @@ using WinAuth.Components;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 188 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
+#line 191 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
        
     private IEnumerable<ObjModel> objects;
 
@@ -115,7 +129,11 @@ using WinAuth.Components;
 
     private ObjModExtended newComponent = new ObjModExtended();
 
-    private User user = new User();
+    private UserModel user = new UserModel();
+
+    private AuthenticationState authState;
+
+    private WindowsIdentity windowsIdentity;
 
     private bool itemCreation = false;
 
@@ -129,7 +147,12 @@ using WinAuth.Components;
 
     protected override async Task OnInitializedAsync()
     {
-        objects = await SqlDataAccess.LoadData();
+        authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        windowsIdentity = (WindowsIdentity)authState.User.Identity;
+
+        user = await SqlDataAccess.GetSqlUsername(windowsIdentity);
+
+        objects = await SqlDataAccess.LoadData(windowsIdentity);
 
         int idCount = 0;
 
@@ -137,10 +160,10 @@ using WinAuth.Components;
         {
             ObjModExtended temp = new ObjModExtended();
 
-            temp.CopyFields(item, SqlDataAccess);
+            temp.CopyFields(windowsIdentity, item, SqlDataAccess);
 
-            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(item.Id);
-            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(item.Id);
+            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(windowsIdentity, item.Id);
+            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(windowsIdentity, item.Id);
 
             ++idCount;
             temp.ProprietatiLabel.IdHtml = idCount;
@@ -152,7 +175,9 @@ using WinAuth.Components;
             rows.Add(temp);
         }
 
-        user = await SqlDataAccess.GetSqlUsername();
+
+
+
 
         editable = true;
     }
@@ -269,8 +294,8 @@ using WinAuth.Components;
             foreach (var item in rows)
             {
                 // save all changes to db
-                SqlDataAccess.UpdateLabelProperty(item.ProprietatiLabel, item.Id);
-                SqlDataAccess.UpdateControlProperty(item.ProprietatiControl, item.Id);
+                SqlDataAccess.UpdateLabelProperty(windowsIdentity, item.ProprietatiLabel, item.Id);
+                SqlDataAccess.UpdateControlProperty(windowsIdentity, item.ProprietatiControl, item.Id);
             }
 
             editNow = false;
@@ -506,6 +531,7 @@ using WinAuth.Components;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISqlDataAccess SqlDataAccess { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime JSRuntime { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
     }
 }
 #pragma warning restore 1591

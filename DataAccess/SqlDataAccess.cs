@@ -1,11 +1,14 @@
 ﻿using Dapper;
 using DataAccess.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Win32.SafeHandles;
+using SimpleImpersonation;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace DataAccess
@@ -21,187 +24,246 @@ namespace DataAccess
 			_config = config;
 		}
 
-		public async Task<List<int>> GetComboboxList(int id)
+		public async Task<List<int>> GetComboboxList(WindowsIdentity windowsIdentity, int id)
 		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-			IEnumerable<int> elems = new List<int>();
+			var windowsIdentityToken = windowsIdentity.AccessToken;
 
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			return await RunImpersonatedAsync<List<int>>(windowsIdentityToken, async () =>
 			{
-				var parameters = new DynamicParameters();
-				parameters.Add("ID", id, DbType.Int32);
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				IEnumerable<int> elems = new List<int>();
 
-				elems = await connection.QueryAsync<int>("Selectie_RecordSource", parameters, commandType: CommandType.StoredProcedure);
-			}
-
-			return elems.ToList();
-		}
-
-		public async Task<Properties> GetControlPropertyByID(int id)
-		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-			Properties properties = new Properties();
-
-			using (IDbConnection connection = new SqlConnection(connectionString))
-			{
-				const string sql = "SELECT * FROM ProprietatiControl WHERE ID = @ID";
-
-				properties = await connection.QueryFirstOrDefaultAsync<Properties>(sql, new { id });
-			}
-
-			return properties;
-		}
-
-		public async Task<ObjModel> GetDataById(int id)
-		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-			ObjModel objectResult = new ObjModel();
-
-			using (IDbConnection connection = new SqlConnection(connectionString))
-			{
-				const string sql = "SELECT * FROM Obiecte WHERE ID = @ID";
-
-				objectResult = await connection.QueryFirstOrDefaultAsync<ObjModel>(sql, new { id });
-			}
-
-			return objectResult;
-		}
-
-		public async Task<Properties> GetLabelPropertyByID(int id)
-		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-			Properties properties = new Properties();
-
-			using (IDbConnection connection = new SqlConnection(connectionString))
-			{
-				const string sql = "SELECT * FROM ProprietatiLabel WHERE ID = @ID";
-
-				properties = await connection.QueryFirstOrDefaultAsync<Properties>(sql, new { id });
-			}
-
-			return properties;
-		}
-
-		public async Task<List<ObjModel>> LoadData()
-		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-			IEnumerable<ObjModel> objects;
-
-			using (IDbConnection connection = new SqlConnection(connectionString))
-			{
-				const string sql = "SELECT * FROM Obiecte WHERE grupare=574252 ORDER BY ordine ASC";
-
-				objects = await connection.QueryAsync<ObjModel>(sql, new { });
-			}
-
-			return objects.ToList();
-		}
-
-		public void UpdateControlProperty(Properties properties, int id)
-		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
-
-			try
-			{
-				using (var connection = new SqlConnection(connectionString))
+				using (IDbConnection connection = new SqlConnection(connectionString))
 				{
-					const string sql = @"UPDATE ProprietatiControl SET TopOffset=@TopOffset, LeftOffset=@LeftOffset, Width=@Width, Height=@Height, Color=@Color, Border=@Border, FontSize=@FontSize WHERE (ID=@ID)";
+					var parameters = new DynamicParameters();
+					parameters.Add("ID", id, DbType.Int32);
 
-					using (var command = new SqlCommand(sql, connection))
+					elems = await connection.QueryAsync<int>("Selectie_RecordSource", parameters, commandType: CommandType.StoredProcedure);
+				}
+
+				return (List<int>)elems;
+			});
+		}
+
+		public async Task<Properties> GetControlPropertyByID(WindowsIdentity windowsIdentity, int id)
+		{
+			var windowsIdentityToken = windowsIdentity.AccessToken;
+
+			return await RunImpersonatedAsync<Properties>(windowsIdentityToken, async () =>
+			{
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				Properties properties = new Properties();
+
+				using (IDbConnection connection = new SqlConnection(connectionString))
+				{
+					const string sql = "SELECT * FROM ProprietatiControl WHERE ID = @ID";
+
+					properties = await connection.QueryFirstOrDefaultAsync<Properties>(sql, new { id });
+				}
+
+				return properties;
+			});
+		}
+
+		public async Task<ObjModel> GetDataById(WindowsIdentity windowsIdentity, int id)
+		{
+			var windowsIdentityToken = windowsIdentity.AccessToken;
+
+			return await RunImpersonatedAsync<ObjModel>(windowsIdentityToken, async () =>
+			{
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				ObjModel objectResult = new ObjModel();
+
+				using (IDbConnection connection = new SqlConnection(connectionString))
+				{
+					const string sql = "SELECT * FROM Obiecte WHERE ID = @ID";
+
+					objectResult = await connection.QueryFirstOrDefaultAsync<ObjModel>(sql, new { id });
+				}
+
+				return objectResult;
+			});
+		}
+
+		public async Task<Properties> GetLabelPropertyByID(WindowsIdentity windowsIdentity, int id)
+		{
+			var windowsIdentityToken = windowsIdentity.AccessToken;
+
+			return await RunImpersonatedAsync<Properties>(windowsIdentityToken, async () =>
+			{
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				Properties properties = new Properties();
+
+				using (IDbConnection connection = new SqlConnection(connectionString))
+				{
+					const string sql = "SELECT * FROM ProprietatiLabel WHERE ID = @ID";
+
+					properties = await connection.QueryFirstOrDefaultAsync<Properties>(sql, new { id });
+				}
+
+				return properties;
+			});
+		}
+
+		public async Task<List<ObjModel>> LoadData(WindowsIdentity windowsIdentity)
+		{
+			var windowsIdentityToken = windowsIdentity.AccessToken;
+
+			return await RunImpersonatedAsync<List<ObjModel>>(windowsIdentityToken, async () =>
+			{
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				IEnumerable<ObjModel> objects;
+
+				using (IDbConnection connection = new SqlConnection(connectionString))
+				{
+					const string sql = "SELECT * FROM Obiecte WHERE grupare=574252 ORDER BY ordine ASC";
+
+					objects = await connection.QueryAsync<ObjModel>(sql, new { });
+				}
+
+				return (List<ObjModel>)objects;
+			});
+
+
+		}
+
+		public void UpdateControlProperty(WindowsIdentity windowsIdentity, Properties properties, int id)
+		{
+			var windowsIdentityToken = windowsIdentity.AccessToken;
+
+			WindowsIdentity.RunImpersonated(windowsIdentityToken, () =>
+			{
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+
+				try
+				{
+					using (var connection = new SqlConnection(connectionString))
 					{
-						command.Parameters.AddWithValue("@ID", id);
-						command.Parameters.AddWithValue("@TopOffset", properties.TopOffset);
-						command.Parameters.AddWithValue("@LeftOffset", properties.LeftOffset);
-						command.Parameters.AddWithValue("@Width", properties.Width);
-						command.Parameters.AddWithValue("@Height", properties.Height);
-						command.Parameters.AddWithValue("@Color", properties.Color);
-						command.Parameters.AddWithValue("@Border", properties.Border);
-						command.Parameters.AddWithValue("@FontSize", properties.FontSize);
+						const string sql = @"UPDATE ProprietatiControl SET TopOffset=@TopOffset, LeftOffset=@LeftOffset, Width=@Width, Height=@Height, Color=@Color, Border=@Border, FontSize=@FontSize WHERE (ID=@ID)";
 
-						connection.Open();
-						command.ExecuteNonQuery();
+						using (var command = new SqlCommand(sql, connection))
+						{
+							command.Parameters.AddWithValue("@ID", id);
+							command.Parameters.AddWithValue("@TopOffset", properties.TopOffset);
+							command.Parameters.AddWithValue("@LeftOffset", properties.LeftOffset);
+							command.Parameters.AddWithValue("@Width", properties.Width);
+							command.Parameters.AddWithValue("@Height", properties.Height);
+							command.Parameters.AddWithValue("@Color", properties.Color);
+							command.Parameters.AddWithValue("@Border", properties.Border);
+							command.Parameters.AddWithValue("@FontSize", properties.FontSize);
+
+							connection.Open();
+							command.ExecuteNonQuery();
+						}
 					}
 				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Failed to update: " + e.Message);
-			}
+				catch (Exception e)
+				{
+					Console.WriteLine("Failed to update: " + e.Message);
+				}
+			});
 		}
 
-		public void UpdateLabelProperty(Properties properties, int id)
+		public void UpdateLabelProperty(WindowsIdentity windowsIdentity, Properties properties, int id)
 		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
+			var windowsIdentityToken = windowsIdentity.AccessToken;
 
-			try
+			WindowsIdentity.RunImpersonated(windowsIdentityToken, () =>
 			{
-				using (var connection = new SqlConnection(connectionString))
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+
+				try
 				{
-					const string sql = @"UPDATE ProprietatiLabel SET TopOffset=@TopOffset, LeftOffset=@LeftOffset, Width=@Width, Height=@Height, Color=@Color, Border=@Border, FontSize=@FontSize WHERE (ID=@ID)";
-
-					using (var command = new SqlCommand(sql, connection))
+					using (var connection = new SqlConnection(connectionString))
 					{
-						command.Parameters.AddWithValue("@ID", id);
-						command.Parameters.AddWithValue("@TopOffset", properties.TopOffset);
-						command.Parameters.AddWithValue("@LeftOffset", properties.LeftOffset);
-						command.Parameters.AddWithValue("@Width", properties.Width);
-						command.Parameters.AddWithValue("@Height", properties.Height);
-						command.Parameters.AddWithValue("@Color", properties.Color);
-						command.Parameters.AddWithValue("@Border", properties.Border);
-						command.Parameters.AddWithValue("@FontSize", properties.FontSize);
+						const string sql = @"UPDATE ProprietatiLabel SET TopOffset=@TopOffset, LeftOffset=@LeftOffset, Width=@Width, Height=@Height, Color=@Color, Border=@Border, FontSize=@FontSize WHERE (ID=@ID)";
 
-						connection.Open();
-						command.ExecuteNonQuery();
+						using (var command = new SqlCommand(sql, connection))
+						{
+							command.Parameters.AddWithValue("@ID", id);
+							command.Parameters.AddWithValue("@TopOffset", properties.TopOffset);
+							command.Parameters.AddWithValue("@LeftOffset", properties.LeftOffset);
+							command.Parameters.AddWithValue("@Width", properties.Width);
+							command.Parameters.AddWithValue("@Height", properties.Height);
+							command.Parameters.AddWithValue("@Color", properties.Color);
+							command.Parameters.AddWithValue("@Border", properties.Border);
+							command.Parameters.AddWithValue("@FontSize", properties.FontSize);
 
-						Console.WriteLine("Update Label: " + properties.Width);
+							connection.Open();
+							command.ExecuteNonQuery();
+
+							Console.WriteLine("Update Label: " + properties.Width);
+						}
 					}
 				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Failed to update: " + e.Message);
-			}
+				catch (Exception e)
+				{
+					Console.WriteLine("Failed to update: " + e.Message);
+				}
+			});
 		}
 
-		public async Task<bool> UpdateData(ObjModel objModel)
+		public async Task<bool> UpdateData(WindowsIdentity windowsIdentity, ObjModel objModel)
 		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
+			var windowsIdentityToken = windowsIdentity.AccessToken;
 
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			await WindowsIdentity.RunImpersonated(windowsIdentityToken, async () =>
 			{
-				const string sql = @"UPDATE Obiecte SET Grupare=@Grupare, Tip=@Tip, Activ=@Activ, Ordine=@Ordine, " +
-					"Simbol=@Simbol, Data=@Data, Valoare=@Valoare, Referinta=@Referinta WHERE (ID=@ID)";
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
 
-				await connection.ExecuteAsync(sql, new
+				using (IDbConnection connection = new SqlConnection(connectionString))
 				{
-					objModel.Grupare,
-					objModel.Tip,
-					objModel.Activ,
-					objModel.Ordine,
-					objModel.Simbol,
-					objModel.Data,
-					objModel.Valoare,
-					objModel.Referinta
-				});
-			}
+					const string sql = @"UPDATE Obiecte SET Grupare=@Grupare, Tip=@Tip, Activ=@Activ, Ordine=@Ordine, " +
+						"Simbol=@Simbol, Data=@Data, Valoare=@Valoare, Referinta=@Referinta WHERE (ID=@ID)";
+
+					await connection.ExecuteAsync(sql, new
+					{
+						objModel.Grupare,
+						objModel.Tip,
+						objModel.Activ,
+						objModel.Ordine,
+						objModel.Simbol,
+						objModel.Data,
+						objModel.Valoare,
+						objModel.Referinta
+					});
+				}
+			});
 
 			return true;
 		}
 
-		public async Task<User> GetSqlUsername()
+		public async Task<UserModel> GetSqlUsername(WindowsIdentity windowsIdentity)
 		{
-			string connectionString = _config.GetConnectionString(ConnectionStringName);
+			var windowsIdentityToken = windowsIdentity.AccessToken;
 
-			IEnumerable<User> users;
-
-			using (IDbConnection connection = new SqlConnection(connectionString))
+			return await RunImpersonatedAsync<UserModel>(windowsIdentityToken, async () =>
 			{
-				const string sql = "SELECT SUSER_NAME() as Username";
+				string connectionString = _config.GetConnectionString(ConnectionStringName);
+				IEnumerable<UserModel> users;
 
-				users = await connection.QueryAsync<User>(sql, new { });
-			}
+				using (IDbConnection connection = new SqlConnection(connectionString))
+				{
+					const string sql = "SELECT SUSER_NAME() as Username";
+					users = await connection.QueryAsync<UserModel>(sql, new { });
+				}
 
-			return users.ToList().ElementAt(0);
+				return users.ToList().ElementAt(0);
+			});
+
+			// not scalable
+			/*
+			var credentials = new UserCredentials("PS", "WFLservice", "@prosoft1");
+			Impersonation.RunAsUser(credentials, LogonType.Interactive, () =>
+			{
+				mockUser.Username = WindowsIdentity.GetCurrent().Name;
+
+				Console.WriteLine(mockUser.Username);
+			});
+			*/
 		}
+
+		public static Task<T> RunImpersonatedAsync<T>(SafeAccessTokenHandle safeAccessTokenHandle, Func<Task<T>> func) =>
+			WindowsIdentity.RunImpersonated(safeAccessTokenHandle, func);
 	}
 }

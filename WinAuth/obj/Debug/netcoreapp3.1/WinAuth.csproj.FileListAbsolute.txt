@@ -143,6 +143,7 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinA
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Dapper.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\SimpleImpersonation.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll

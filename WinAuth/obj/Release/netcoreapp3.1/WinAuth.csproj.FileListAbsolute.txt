@@ -130,3 +130,4 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Release\netcoreapp3.1\Wi
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Release\netcoreapp3.1\WinAuth.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Release\netcoreapp3.1\WinAuth.pdb
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Release\netcoreapp3.1\WinAuth.genruntimeconfig.cache
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Release\netcoreapp3.1\SimpleImpersonation.dll

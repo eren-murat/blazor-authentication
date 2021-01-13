@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace DataAccess.Models
 {
@@ -33,7 +34,7 @@ namespace DataAccess.Models
 
 		public Properties ProprietatiControl { get; set; }
 
-		public async void CopyFields(ObjModel rawObj, ISqlDataAccess sqlDataAccess)
+		public async void CopyFields(WindowsIdentity windowsIdentity, ObjModel rawObj, ISqlDataAccess sqlDataAccess)
 		{
 			Id = rawObj.Id;
 			Grupare = rawObj.Grupare;
@@ -55,7 +56,7 @@ namespace DataAccess.Models
 				ValoareString = null;
 				ValoareData = DateTime.MinValue;
 				ValoareInt = Int32.MinValue;
-				Valori = await sqlDataAccess.GetComboboxList(rawObj.Id);
+				Valori = await sqlDataAccess.GetComboboxList(windowsIdentity, rawObj.Id);
 			}
 			else if (rawObj.Tip == "DATETIME")
 			{
