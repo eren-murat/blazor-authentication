@@ -3,7 +3,7 @@
 ## IIS Manager Configurations
    - application pools
      - advanced settings
-       - identity -> custom account
+       - identity -> ApplicationPoolIdentity
          - load user profile -> *true*
    - default web site
      - authentication
