@@ -3,7 +3,11 @@
 @using DataAccess
 @using DataAccess.Models
 @using WinAuth.Components
+@using System.Security.Claims
+@using System.Security.Principal;
+@using Microsoft.AspNetCore.Components.Authorization
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime JSRuntime
 @inject ISqlDataAccess SqlDataAccess
 @inject NavigationManager NavigationManager
@@ -12,171 +16,176 @@
 
 @if (objects is null)
 {
-    <p><em>Loading...</em></p>
+<p><em>Loading...</em></p>
 }
 else
 {
-    <input type="button" @onclick="CreateNewComponent" value="New Component" />
-    <input type="button" @onclick="Edit" value="Edit" />
-    <input type="button" @onclick="SaveAllComponents" value="Save" />
-    <input type="button" @onclick="ResetAllPositions" value="Reset Positions" />
+<input type="button" @onclick="CreateNewComponent" value="New Component" />
+<input type="button" @onclick="Edit" value="Edit" />
+<input type="button" @onclick="SaveAllComponents" value="Save" />
+<input type="button" @onclick="ResetAllPositions" value="Reset Positions" />
 
-    @if (itemCreation is true)
+<div style="margin-top: 5px;">
+    <p>
+        username: <strong>@user.Username</strong>
+    </p>
+</div>
+
+@if (itemCreation is true)
     {
-        <div class="item-creation-form">
-            <h5>Create new item</h5>
-            <EditForm Model="newComponent" OnValidSubmit="HandleValidSubmit">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
+<div class="item-creation-form">
+    <h5>Create new item</h5>
+    <EditForm Model="newComponent" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-                <table>
-                    <tr>
-                        <td>TipSelect:</td>
-                        <td>
-                            <select class="custom-select-sm" @bind="newComponent.Tip" required>
-                                <option>--type--</option>
-                                @foreach (var type in dataTypes)
+        <table>
+            <tr>
+                <td>TipSelect:</td>
+                <td>
+                    <select class="custom-select-sm" @bind="newComponent.Tip" required>
+                        <option>--type--</option>
+                        @foreach (var type in dataTypes)
                                 {
-                                    <option>@type</option>
+                        <option>@type</option>
                                 }
-                            </select>
-                        </td>
-                    </tr>
+                    </select>
+                </td>
+            </tr>
 
-                    @*<tr>
-                            <td>Tip:</td>
-                            <td>
-                                <input type="text" @onchange="((ChangeEventArgs e) => ChangeDataType(e.Value.ToString()))" />
-                            </td>
-                        </tr>*@
+            @*<tr>
+                    <td>Tip:</td>
+                    <td>
+                        <input type="text" @onchange="((ChangeEventArgs e) => ChangeDataType(e.Value.ToString()))" />
+                    </td>
+                </tr>*@
 
-                    <tr>
-                        <td>Simbol:</td>
-                        <td>
-                            <input type="text" @bind="newComponent.Simbol" required />
-                        </td>
-                    </tr>
+            <tr>
+                <td>Simbol:</td>
+                <td>
+                    <input type="text" @bind="newComponent.Simbol" required />
+                </td>
+            </tr>
 
-                    <tr>
-                        <td>Data:</td>
-                        <td>
-                            <input type="date" @bind="newComponent.Data" min="1900-01-01" max="2050-12-31" required />
-                        </td>
-                    </tr>
+            <tr>
+                <td>Data:</td>
+                <td>
+                    <input type="date" @bind="newComponent.Data" min="1900-01-01" max="2050-12-31" required />
+                </td>
+            </tr>
 
-                    <tr>
-                        <td>Valoare:</td>
-                        <td>
-                            @if (newComponent.Tip == "DATETIME")
+            <tr>
+                <td>Valoare:</td>
+                <td>
+                    @if (newComponent.Tip == "DATETIME")
                             {
-                                <input type="date" @bind="newComponent.ValoareData" min="1900-01-01" max="2050-12-31" required />
+                    <input type="date" @bind="newComponent.ValoareData" min="1900-01-01" max="2050-12-31" required />
                             }
                             else
                             {
-                                <input type="text" @bind="newComponent.ValoareString" required />
+                    <input type="text" @bind="newComponent.ValoareString" required />
                             }
-                        </td>
-                    </tr>
+                </td>
+            </tr>
 
-                    <tr>
-                        <td>Referinta:</td>
-                        <td>
-                            <input type="text" @bind="newComponent.Referinta" required />
-                        </td>
-                    </tr>
-                </table>
+            <tr>
+                <td>Referinta:</td>
+                <td>
+                    <input type="text" @bind="newComponent.Referinta" required />
+                </td>
+            </tr>
+        </table>
 
-                <button type="submit">Create</button>
-            </EditForm>
-        </div>
+        <button type="submit">Create</button>
+    </EditForm>
+</div>
     }
 
-    <div id="container">
-        @if (editNow is true)
+<div id="container">
+    @if (editNow is true)
         {
-            <div class="details">
-                <h5>Inspector:</h5>
-                <h5>@itemDetails.Name</h5>
+    <div class="details">
+        <h5>Inspector:</h5>
+        <h5>@itemDetails.Name</h5>
 
-                <EditForm Model="@itemDetails">
-                    <table>
-                        <tr>
-                            <td>Width:</td>
-                            <td>
-                                <input value="@itemDetails.Width"
-                                       @onchange="@((ChangeEventArgs e) => UpdateWidth(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="width" />
-                            </td>
-                        </tr>
+        <EditForm Model="@itemDetails">
+            <table>
+                <tr>
+                    <td>Width:</td>
+                    <td>
+                        <input value="@itemDetails.Width"
+                               @onchange="@((ChangeEventArgs e) => UpdateWidth(e.Value.ToString()))"
+                               style="width: 100%" placeholder="width" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Height:</td>
-                            <td>
-                                <input value="@itemDetails.Height"
-                                       @onchange="@((ChangeEventArgs e) => UpdateHeight(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="height" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Height:</td>
+                    <td>
+                        <input value="@itemDetails.Height"
+                               @onchange="@((ChangeEventArgs e) => UpdateHeight(e.Value.ToString()))"
+                               style="width: 100%" placeholder="height" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Top:</td>
-                            <td>
-                                <input value="@itemDetails.Top"
-                                       @onchange="@((ChangeEventArgs e) => UpdateTop(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="top" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Top:</td>
+                    <td>
+                        <input value="@itemDetails.Top"
+                               @onchange="@((ChangeEventArgs e) => UpdateTop(e.Value.ToString()))"
+                               style="width: 100%" placeholder="top" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Left:</td>
-                            <td>
-                                <input value="@itemDetails.Left"
-                                       @onchange="@((ChangeEventArgs e) => UpdateLeft(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="left" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Left:</td>
+                    <td>
+                        <input value="@itemDetails.Left"
+                               @onchange="@((ChangeEventArgs e) => UpdateLeft(e.Value.ToString()))"
+                               style="width: 100%" placeholder="left" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Color:</td>
-                            <td>
-                                <input value="@itemDetails.Color"
-                                       @onchange="@((ChangeEventArgs e) => UpdateColor(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="color" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Color:</td>
+                    <td>
+                        <input value="@itemDetails.Color"
+                               @onchange="@((ChangeEventArgs e) => UpdateColor(e.Value.ToString()))"
+                               style="width: 100%" placeholder="color" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Border:</td>
-                            <td>
-                                <input value="@itemDetails.Border"
-                                       @onchange="@((ChangeEventArgs e) => UpdateBorder(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="border" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Border:</td>
+                    <td>
+                        <input value="@itemDetails.Border"
+                               @onchange="@((ChangeEventArgs e) => UpdateBorder(e.Value.ToString()))"
+                               style="width: 100%" placeholder="border" />
+                    </td>
+                </tr>
 
-                        <tr>
-                            <td>Font size:</td>
-                            <td>
-                                <input value="@itemDetails.FontSize"
-                                       @onchange="@((ChangeEventArgs e) => UpdateFontSize(e.Value.ToString()))"
-                                       style="width: 100%" placeholder="font size" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>Font size:</td>
+                    <td>
+                        <input value="@itemDetails.FontSize"
+                               @onchange="@((ChangeEventArgs e) => UpdateFontSize(e.Value.ToString()))"
+                               style="width: 100%" placeholder="font size" />
+                    </td>
+                </tr>
 
-                    </table>
-                </EditForm>
-            </div>
-        }
-
-        @foreach (var item in rows)
-        {
-            <div>
-                <DraggableLabel Item="item" />
-
-                <DraggableControl Item="item" />
-            </div>
-        }
+            </table>
+        </EditForm>
     </div>
+        }
+
+    @foreach (var item in rows)
+        {
+    <div>
+        <DraggableLabel Item="item"></DraggableLabel>
+        <DraggableControl Item="item"></DraggableControl>
+    </div>
+        }
+</div>
 }
 
 @code {
@@ -187,6 +196,12 @@ else
     private Details itemDetails = new Details();
 
     private ObjModExtended newComponent = new ObjModExtended();
+
+    private UserModel user = new UserModel();
+
+    private AuthenticationState authState;
+
+    private WindowsIdentity windowsIdentity;
 
     private bool itemCreation = false;
 
@@ -200,7 +215,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        objects = await SqlDataAccess.LoadData();
+        authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        windowsIdentity = (WindowsIdentity)authState.User.Identity;
+
+        user = await SqlDataAccess.GetSqlUsername(windowsIdentity);
+
+        objects = await SqlDataAccess.LoadData(windowsIdentity);
 
         int idCount = 0;
 
@@ -208,10 +228,10 @@ else
         {
             ObjModExtended temp = new ObjModExtended();
 
-            temp.CopyFields(item, SqlDataAccess);
+            temp.CopyFields(windowsIdentity, item, SqlDataAccess);
 
-            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(item.Id);
-            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(item.Id);
+            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(windowsIdentity, item.Id);
+            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(windowsIdentity, item.Id);
 
             ++idCount;
             temp.ProprietatiLabel.IdHtml = idCount;
@@ -222,6 +242,10 @@ else
 
             rows.Add(temp);
         }
+
+
+
+
 
         editable = true;
     }
@@ -338,8 +362,8 @@ else
             foreach (var item in rows)
             {
                 // save all changes to db
-                SqlDataAccess.UpdateLabelProperty(item.ProprietatiLabel, item.Id);
-                SqlDataAccess.UpdateControlProperty(item.ProprietatiControl, item.Id);
+                SqlDataAccess.UpdateLabelProperty(windowsIdentity, item.ProprietatiLabel, item.Id);
+                SqlDataAccess.UpdateControlProperty(windowsIdentity, item.ProprietatiControl, item.Id);
             }
 
             editNow = false;

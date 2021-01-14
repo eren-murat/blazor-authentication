@@ -30,6 +30,10 @@ namespace WinAuth
 			services.AddRazorPages();
 			services.AddServerSideBlazor();
 			services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+			services.AddAuthorizationCore();
+
+			services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
