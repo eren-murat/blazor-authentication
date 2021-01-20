@@ -75,6 +75,13 @@ using WinAuth.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 1 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\LoginDisplay.razor"
+using Core;
+
+#line default
+#line hidden
+#nullable disable
     public partial class LoginDisplay : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -82,6 +89,7 @@ using WinAuth.Shared;
         {
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
     }
 }
 #pragma warning restore 1591

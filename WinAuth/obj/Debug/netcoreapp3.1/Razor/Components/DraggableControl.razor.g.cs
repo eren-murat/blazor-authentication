@@ -152,6 +152,7 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             ) + ";");
+            __builder.AddMarkupContent(4, "\r\n");
 #nullable restore
 #line 12 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
      if (Item.Tip == "VARCHAR(255)")
@@ -160,12 +161,13 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
-            __builder.OpenElement(4, "input");
-            __builder.AddAttribute(5, "class", "input-group-sm");
-            __builder.AddAttribute(6, "type", "text");
-            __builder.AddAttribute(7, "style", "width: 100%;");
-            __builder.AddAttribute(8, "required", true);
-            __builder.AddAttribute(9, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
+            __builder.AddContent(5, "        ");
+            __builder.OpenElement(6, "input");
+            __builder.AddAttribute(7, "class", "input-group-sm");
+            __builder.AddAttribute(8, "type", "text");
+            __builder.AddAttribute(9, "style", "width: 100%;");
+            __builder.AddAttribute(10, "required", true);
+            __builder.AddAttribute(11, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
 #nullable restore
 #line 14 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
                                                           Item.ValoareString
@@ -174,9 +176,10 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             ));
-            __builder.AddAttribute(10, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareString = __value, Item.ValoareString));
+            __builder.AddAttribute(12, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareString = __value, Item.ValoareString));
             __builder.SetUpdatesAttributeName("value");
             __builder.CloseElement();
+            __builder.AddMarkupContent(13, "\r\n");
 #nullable restore
 #line 15 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
     }
@@ -186,13 +189,14 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
-            __builder.OpenElement(11, "input");
-            __builder.AddAttribute(12, "type", "date");
-            __builder.AddAttribute(13, "style", "width: 100%;");
-            __builder.AddAttribute(14, "min", "1900-01-01");
-            __builder.AddAttribute(15, "max", "2050-12-31");
-            __builder.AddAttribute(16, "required", true);
-            __builder.AddAttribute(17, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
+            __builder.AddContent(14, "        ");
+            __builder.OpenElement(15, "input");
+            __builder.AddAttribute(16, "type", "date");
+            __builder.AddAttribute(17, "style", "width: 100%;");
+            __builder.AddAttribute(18, "min", "1900-01-01");
+            __builder.AddAttribute(19, "max", "2050-12-31");
+            __builder.AddAttribute(20, "required", true);
+            __builder.AddAttribute(21, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
 #nullable restore
 #line 18 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
                                    Item.ValoareData
@@ -201,9 +205,10 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             , format: "yyyy-MM-dd", culture: global::System.Globalization.CultureInfo.InvariantCulture));
-            __builder.AddAttribute(18, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareData = __value, Item.ValoareData, format: "yyyy-MM-dd", culture: global::System.Globalization.CultureInfo.InvariantCulture));
+            __builder.AddAttribute(22, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareData = __value, Item.ValoareData, format: "yyyy-MM-dd", culture: global::System.Globalization.CultureInfo.InvariantCulture));
             __builder.SetUpdatesAttributeName("value");
             __builder.CloseElement();
+            __builder.AddMarkupContent(23, "\r\n");
 #nullable restore
 #line 19 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
     }
@@ -213,10 +218,11 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
-            __builder.OpenElement(19, "select");
-            __builder.AddAttribute(20, "class", "custom-select-sm");
-            __builder.AddAttribute(21, "style", "width: 100%;");
-            __builder.AddAttribute(22, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
+            __builder.AddContent(24, "        ");
+            __builder.OpenElement(25, "select");
+            __builder.AddAttribute(26, "class", "custom-select-sm");
+            __builder.AddAttribute(27, "style", "width: 100%;");
+            __builder.AddAttribute(28, "value", Microsoft.AspNetCore.Components.BindConverter.FormatValue(
 #nullable restore
 #line 22 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
                                                  Item.ValoareInt
@@ -225,8 +231,9 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             ));
-            __builder.AddAttribute(23, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareInt = __value, Item.ValoareInt));
+            __builder.AddAttribute(29, "onchange", Microsoft.AspNetCore.Components.EventCallback.Factory.CreateBinder(this, __value => Item.ValoareInt = __value, Item.ValoareInt));
             __builder.SetUpdatesAttributeName("value");
+            __builder.AddMarkupContent(30, "\r\n");
 #nullable restore
 #line 23 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
          if (Item.Valori != null)
@@ -244,8 +251,9 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
-            __builder.OpenElement(24, "option");
-            __builder.AddContent(25, 
+            __builder.AddContent(31, "                ");
+            __builder.OpenElement(32, "option");
+            __builder.AddContent(33, 
 #nullable restore
 #line 27 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
                          option
@@ -255,6 +263,7 @@ using DataAccess.Models;
 #nullable disable
             );
             __builder.CloseElement();
+            __builder.AddMarkupContent(34, "\r\n");
 #nullable restore
 #line 28 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
             }
@@ -270,7 +279,9 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
+            __builder.AddMarkupContent(35, "\r\n        ");
             __builder.CloseElement();
+            __builder.AddMarkupContent(36, "\r\n");
 #nullable restore
 #line 32 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
     }
@@ -280,7 +291,7 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
-            __builder.AddMarkupContent(26, "<input type=\"button\" value=\"More\" style=\"width: 100%;\">");
+            __builder.AddMarkupContent(37, "        <input type=\"button\" value=\"More\" style=\"width: 100%;\">\r\n");
 #nullable restore
 #line 36 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
     }
@@ -288,6 +299,7 @@ using DataAccess.Models;
 #line default
 #line hidden
 #nullable disable
+            __builder.AddMarkupContent(38, "\r\n");
             __builder.CloseElement();
         }
         #pragma warning restore 1998

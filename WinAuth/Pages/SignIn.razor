@@ -1,0 +1,57 @@
+﻿@page "/signin"
+@layout PublicLayout
+
+@using Core
+@using DataAccess 
+
+@inject NavigationManager NavigationManager
+@inject Settings Settings 
+@inject ISqlDataAccess SqlDataAccess
+
+<h3>SignIn</h3>
+
+<div>
+    <b>@errorMessage</b>
+
+    <div>
+        <label>Username</label>
+        <input @bind="username" placeholder="username" />
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input type="password" @bind="password" placeholder="password" />
+    </div>
+
+    <div>
+        <button @onclick="SignInUser">Sign In</button>
+    </div>
+</div>
+
+@code {
+    private string username { get; set; }
+    private string password { get; set; }
+
+    private string errorMessage { get; set; }
+
+    private void SignInUser()
+    {
+        Settings.SetUserName(username);
+        Settings.SetPassword(password);
+
+        if (SqlDataAccess.VerifySqlConnection())
+        {
+            Console.WriteLine("connection open");
+            Settings.SetLoginTime(DateTime.Now);
+
+            Settings.isLoggedIn = true;
+            NavigationManager.NavigateTo("/", forceLoad: true);
+            // StateHasChanged();
+        }
+        else
+        {
+            errorMessage = "Wrong username or password";
+            StateHasChanged();
+        }
+    }
+}

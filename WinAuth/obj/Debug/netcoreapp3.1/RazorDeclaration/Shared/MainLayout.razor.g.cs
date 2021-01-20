@@ -75,6 +75,20 @@ using WinAuth.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
+using System.Security.Principal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
+using Core;
+
+#line default
+#line hidden
+#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -82,6 +96,49 @@ using WinAuth.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 26 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
+       
+    private AuthenticationState authState;
+
+    private WindowsIdentity windowsIdentity;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Settings.UseWindowsAuthentication() && !Settings.isLoggedIn
+            && (Settings.GetLoginTime() - DateTime.Now).Hours > 8)
+        {
+            // go to login page
+            windowsIdentity = WindowsIdentity.GetCurrent();
+
+            try
+            {
+                NavigationManager.NavigateTo("/signin"); // error
+            }
+            catch (NavigationException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+        else if (Settings.UseWindowsAuthentication())
+        {
+            // go to home page
+            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            windowsIdentity = (WindowsIdentity)authState.User.Identity;
+            Settings.SetWindowsIdentity(windowsIdentity);
+            Settings.SetUserName(windowsIdentity.Name);
+            Settings.isLoggedIn = true;
+        }
+
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
     }
 }
 #pragma warning restore 1591

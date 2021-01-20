@@ -75,6 +75,13 @@ using WinAuth.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Index.razor"
+using Core;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -83,6 +90,7 @@ using WinAuth.Shared;
         {
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
     }
 }
 #pragma warning restore 1591

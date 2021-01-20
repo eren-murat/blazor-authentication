@@ -1,3 +1,16 @@
-﻿<AuthorizeView>
-    Hello, @context.User.Identity.Name!
-</AuthorizeView>
+﻿@using Core 
+
+@inject Settings Settings
+
+@if (Settings.isLoggedIn)
+{
+    <span>
+        Hello, @Settings.GetUserName()!
+    </span>
+}
+else
+{
+    <span>
+        <a href="/signin">Login</a>
+    </span>
+}

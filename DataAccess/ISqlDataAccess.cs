@@ -9,25 +9,25 @@ namespace DataAccess
 {
 	public interface ISqlDataAccess
 	{
-		string ConnectionStringName { get; set; }
+		bool VerifySqlConnection();
 
-		Task<List<ObjModel>> LoadData(WindowsIdentity windowsIdentity);
+		Task<List<ObjModel>> LoadData();
 
-		Task<ObjModel> GetDataById(WindowsIdentity windowsIdentity, int id);
+		Task<ObjModel> GetDataById(int id);
 
-		Task<bool> UpdateData(WindowsIdentity windowsIdentity, ObjModel objModel);
+		Task<bool> UpdateData(ObjModel objModel);
 
-		Task<List<int>> GetComboboxList(WindowsIdentity windowsIdentity, int id);
+		Task<List<int>> GetComboboxList(int id);
 
-		Task<Properties> GetLabelPropertyByID(WindowsIdentity windowsIdentity, int id);
+		Task<Properties> GetLabelPropertyByID(int id);
 
-		void UpdateLabelProperty(WindowsIdentity windowsIdentity, Properties properties, int id);
+		void UpdateLabelProperty(Properties properties, int id);
 
-		Task<Properties> GetControlPropertyByID(WindowsIdentity windowsIdentity, int id);
+		Task<Properties> GetControlPropertyByID(int id);
 
-		void UpdateControlProperty(WindowsIdentity windowsIdentity, Properties properties, int id);
+		void UpdateControlProperty(Properties properties, int id);
 
-		Task<UserModel> GetSqlUsername(WindowsIdentity windowsIdentity);
+		Task<UserSqlTesting> GetSqlUsername();
 
 		static Task<T> RunImpersonatedAsync<T>(SafeAccessTokenHandle safeAccessTokenHandle, Func<Task<T>> func) =>
 			WindowsIdentity.RunImpersonated(safeAccessTokenHandle, func);

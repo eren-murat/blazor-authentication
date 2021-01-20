@@ -1,7 +1,21 @@
 ﻿@page "/"
 
+@using Core
+
+@inject Settings Settings
+
 <h1>Hello, world!</h1>
 
-<AuthorizeView>
-    Welcome to our your new app, @context.User.Identity.Name!
-</AuthorizeView>
+@if (Settings.isLoggedIn)
+{
+    <p>
+        Welcome to our new app, @Settings.GetUserName()!
+    </p>
+}
+else
+{
+    <p>
+        You are not authenticated.
+    </p>
+}
+

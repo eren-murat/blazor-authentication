@@ -1,5 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
+@using System.Security.Principal;
+@using Core
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject Settings Settings
+
 <div class="sidebar">
     <NavMenu />
 </div>
@@ -14,3 +21,40 @@
         @Body
     </div>
 </div>
+
+
+@code {
+    private AuthenticationState authState;
+
+    private WindowsIdentity windowsIdentity;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Settings.UseWindowsAuthentication() && !Settings.isLoggedIn
+            && (Settings.GetLoginTime() - DateTime.Now).Hours > 8)
+        {
+            // go to login page
+            windowsIdentity = WindowsIdentity.GetCurrent();
+
+            try
+            {
+                NavigationManager.NavigateTo("/signin"); // error
+            }
+            catch (NavigationException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+        else if (Settings.UseWindowsAuthentication())
+        {
+            // go to home page
+            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            windowsIdentity = (WindowsIdentity)authState.User.Identity;
+            Settings.SetWindowsIdentity(windowsIdentity);
+            Settings.SetUserName(windowsIdentity.Name);
+            Settings.isLoggedIn = true;
+        }
+
+    }
+}

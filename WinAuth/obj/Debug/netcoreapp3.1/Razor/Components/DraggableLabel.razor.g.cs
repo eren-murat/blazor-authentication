@@ -152,7 +152,8 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             ) + ";");
-            __builder.AddContent(4, 
+            __builder.AddMarkupContent(4, "\r\n    ");
+            __builder.AddContent(5, 
 #nullable restore
 #line 12 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableLabel.razor"
      Item.Simbol
@@ -161,6 +162,7 @@ using DataAccess.Models;
 #line hidden
 #nullable disable
             );
+            __builder.AddMarkupContent(6, "\r\n");
             __builder.CloseElement();
         }
         #pragma warning restore 1998

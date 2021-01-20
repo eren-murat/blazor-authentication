@@ -1,16 +1,12 @@
 using DataAccess;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+using Core;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace WinAuth
 {
@@ -29,11 +25,13 @@ namespace WinAuth
 		{
 			services.AddRazorPages();
 			services.AddServerSideBlazor();
-			services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 			services.AddAuthorizationCore();
 
-			services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+			Settings settings = new Settings(Configuration);
+			services.AddSingleton<Settings>(settings);
+			services.AddTransient<ISqlDataAccess, SqlDataAccess>((_) => new SqlDataAccess(settings));
 
+			services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
