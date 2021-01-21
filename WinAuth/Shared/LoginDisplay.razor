@@ -1,16 +1,34 @@
-﻿@using Core 
+﻿@using Core
 
 @inject Settings Settings
+@inject NavigationManager NavigationManager
 
-@if (Settings.isLoggedIn)
+@if (Settings.IsUserLoggedIn())
 {
     <span>
         Hello, @Settings.GetUserName()!
     </span>
+
+    @if (!Settings.UseWindowsAuthentication())
+    {
+        <button @onclick="Logout">Logout</button>
+    }
+
 }
 else
 {
-    <span>
-        <a href="/signin">Login</a>
-    </span>
+    <button @onclick="Login">Login</button>
+}
+
+@code {
+    private void Login()
+    {
+        NavigationManager.NavigateTo("/signin");
+    }
+
+    private void Logout()
+    {
+        Settings.LogoutUser();
+        NavigationManager.NavigateTo("/signedout");
+    }
 }

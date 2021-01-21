@@ -10,79 +10,96 @@ namespace Core
 	{
 		private readonly IConfiguration config;
 		private string connectionStringName { get; set; } = "BasicLogin";
-		private WindowsIdentity windowsIdentity { get; set; }
-		private UserModel user { get; set; }
-
-		public bool isLoggedIn = false;
+		private UserModel currentUser { get; set; }
 
 		public Settings(IConfiguration configuration)
 		{
 			config = configuration;
-			user = new UserModel();
+			currentUser = new UserModel();
+		}
+
+		public void LoginUser(WindowsIdentity windowsId)
+		{
+			currentUser.WindowsIdentity = windowsId;
+			currentUser.Name = windowsId.Name;
+			currentUser.IsLoggedIn = true;
+		}
+
+		public void LoginUser(string name, string password, DateTime loginTime)
+		{
+			currentUser = new UserModel
+			{
+				Name = name,
+				Password = password,
+				IsLoggedIn = true,
+				LoginTime = loginTime
+			};
+		}
+
+		public void LogoutUser()
+		{
+			currentUser = new UserModel
+			{
+				IsLoggedIn = false
+			};
+		}
+
+		public bool IsUserLoggedIn()
+		{
+			if (UseWindowsAuthentication())
+			{
+				return currentUser.IsLoggedIn;
+			}
+			else
+			{
+				return (currentUser.IsLoggedIn && (DateTime.Now - currentUser.LoginTime).Hours < 8);
+			}
 		}
 
 		public string GetUserName()
 		{
-			return user.Name;
-		}
-
-		public void SetUserName(string name)
-		{
-			user.Name = name;
-		}
-
-		public void SetPassword(string password)
-		{
-			user.Password = password;
+			return currentUser.Name;
 		}
 
 		public DateTime GetLoginTime()
 		{
-			return user.LoginTime;
+			return currentUser.LoginTime;
 		}
 
-		public void SetLoginTime(DateTime time)
+		public WindowsIdentity GetWindowsIdentity()
 		{
-			user.LoginTime = time;
+			return currentUser.WindowsIdentity;
 		}
 
 		public string GetConnectionString()
 		{
 			string connectionString = config.GetConnectionString(connectionStringName);
 
-			Console.WriteLine(connectionString);
-
 			if (connectionStringName == "BasicLogin")
 			{
-				Console.WriteLine(user.Name);
-				Console.WriteLine(user.Password);
-				connectionString = connectionString.Replace("placeholderName", user.Name);
-				connectionString = connectionString.Replace("placeholderPass", user.Password);
+				connectionString = connectionString.Replace("placeholderName", currentUser.Name);
+				connectionString = connectionString.Replace("placeholderPass", currentUser.Password);
 			}
-
-			Console.WriteLine(connectionString);
 
 			return connectionString;
 		}
 
-		public WindowsIdentity GetWindowsIdentity()
+		public string GetTestConnectionString(string uid, string  pwsd)
 		{
-			return windowsIdentity;
-		}
+			string connectionString = config.GetConnectionString(connectionStringName);
 
-		public void SetWindowsIdentity(WindowsIdentity newWindowsIdentity)
-		{
-			windowsIdentity = newWindowsIdentity;
+			if (connectionStringName == "BasicLogin")
+			{
+				connectionString = connectionString.Replace("placeholderName", uid);
+				connectionString = connectionString.Replace("placeholderPass", pwsd);
+			}
+
+			return connectionString;
 		}
 
 		public bool UseWindowsAuthentication()
 		{
-			if (connectionStringName == "Default")
-			{
-				return true;
-			}
-
-			return false;
+			return connectionStringName == "Default";
 		}
 	}
 }

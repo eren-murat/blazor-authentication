@@ -105,12 +105,17 @@ using Core;
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Settings.UseWindowsAuthentication() && !Settings.isLoggedIn
-            && (Settings.GetLoginTime() - DateTime.Now).Hours > 8)
+        if (Settings.UseWindowsAuthentication())
         {
-            // go to login page
-            windowsIdentity = WindowsIdentity.GetCurrent();
+            // go directly to home page
+            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            windowsIdentity = (WindowsIdentity)authState.User.Identity;
 
+            Settings.LoginUser(windowsIdentity);
+        }
+
+        if (!Settings.UseWindowsAuthentication() && !Settings.IsUserLoggedIn())
+        {
             try
             {
                 NavigationManager.NavigateTo("/signin"); // error
@@ -119,18 +124,7 @@ using Core;
             {
                 Console.WriteLine(e.Message);
             }
-
         }
-        else if (Settings.UseWindowsAuthentication())
-        {
-            // go to home page
-            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            windowsIdentity = (WindowsIdentity)authState.User.Identity;
-            Settings.SetWindowsIdentity(windowsIdentity);
-            Settings.SetUserName(windowsIdentity.Name);
-            Settings.isLoggedIn = true;
-        }
-
     }
 
 #line default

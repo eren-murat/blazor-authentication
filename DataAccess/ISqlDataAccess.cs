@@ -9,7 +9,7 @@ namespace DataAccess
 {
 	public interface ISqlDataAccess
 	{
-		bool VerifySqlConnection();
+		bool VerifySqlConnection(string uid, string pwsd);
 
 		Task<List<ObjModel>> LoadData();
 

@@ -6,7 +6,7 @@
 
 <h1>Hello, world!</h1>
 
-@if (Settings.isLoggedIn)
+@if (Settings.IsUserLoggedIn())
 {
     <p>
         Welcome to our new app, @Settings.GetUserName()!

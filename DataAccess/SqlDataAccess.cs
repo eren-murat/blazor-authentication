@@ -22,11 +22,9 @@ namespace DataAccess
 			_settings = settings;
 		}
 
-		public bool VerifySqlConnection()
+		public bool VerifySqlConnection(string uid, string pwsd)
 		{
-			string connectionString = _settings.GetConnectionString();
-
-			Console.WriteLine(connectionString);
+			string connectionString = _settings.GetTestConnectionString(uid, pwsd);
 
 			SqlConnection connection = new SqlConnection(connectionString);
 
@@ -36,17 +34,9 @@ namespace DataAccess
 			} catch (Exception e)
 			{
 				Console.WriteLine(e.Message);
-				return false;
 			}
 
-			Console.WriteLine(connection.State);
-
-			if (connection.State == ConnectionState.Open)
-			{
-				return true;
-			}
-
-			return false;
+			return connection.State == ConnectionState.Open;
 		}
 
 		public async Task<List<int>> GetComboboxList(int id)

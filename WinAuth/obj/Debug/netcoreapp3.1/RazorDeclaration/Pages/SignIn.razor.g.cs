@@ -108,15 +108,12 @@ using DataAccess;
 
     private void SignInUser()
     {
-        Settings.SetUserName(username);
-        Settings.SetPassword(password);
-
-        if (SqlDataAccess.VerifySqlConnection())
+        if (SqlDataAccess.VerifySqlConnection(username, password))
         {
             Console.WriteLine("connection open");
-            Settings.SetLoginTime(DateTime.Now);
 
-            Settings.isLoggedIn = true;
+            Settings.LoginUser(username, password, DateTime.Now);
+
             NavigationManager.NavigateTo("/", forceLoad: true);
             // StateHasChanged();
         }

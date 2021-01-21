@@ -89,6 +89,24 @@ using Core;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 23 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\LoginDisplay.razor"
+       
+    private void Login()
+    {
+        NavigationManager.NavigateTo("/signin");
+    }
+
+    private void Logout()
+    {
+        Settings.LogoutUser();
+        NavigationManager.NavigateTo("/signedout");
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
     }
 }

@@ -119,7 +119,7 @@ using Core;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 184 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
+#line 194 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
        
     private IEnumerable<ObjModel> objects;
 
@@ -143,32 +143,35 @@ using Core;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await SqlDataAccess.GetSqlUsername();
-
-        objects = await SqlDataAccess.LoadData();
-
-        int idCount = 0;
-
-        foreach (var item in objects)
+        if (Settings.IsUserLoggedIn())
         {
-            ObjModExtended temp = new ObjModExtended();
+            user = await SqlDataAccess.GetSqlUsername();
 
-            temp.CopyFields(item, SqlDataAccess);
+            objects = await SqlDataAccess.LoadData();
 
-            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(item.Id);
-            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(item.Id);
+            int idCount = 0;
 
-            ++idCount;
-            temp.ProprietatiLabel.IdHtml = idCount;
-            ++idCount;
-            temp.ProprietatiControl.IdHtml = idCount;
+            foreach (var item in objects)
+            {
+                ObjModExtended temp = new ObjModExtended();
 
-            // Console.WriteLine(temp.ProprietatiLabel.IdHtml + " " + temp.ProprietatiLabel.TopOffset + " " + temp.ProprietatiLabel.Color);
+                temp.CopyFields(item, SqlDataAccess);
 
-            rows.Add(temp);
+                temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(item.Id);
+                temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(item.Id);
+
+                ++idCount;
+                temp.ProprietatiLabel.IdHtml = idCount;
+                ++idCount;
+                temp.ProprietatiControl.IdHtml = idCount;
+
+                // Console.WriteLine(temp.ProprietatiLabel.IdHtml + " " + temp.ProprietatiLabel.TopOffset + " " + temp.ProprietatiLabel.Color);
+
+                rows.Add(temp);
+            }
+
+            editable = true;
         }
-
-        editable = true;
     }
 
     private void CreateNewComponent()
