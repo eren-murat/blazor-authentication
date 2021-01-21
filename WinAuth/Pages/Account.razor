@@ -1,0 +1,24 @@
+﻿@page "/account"
+
+<h3>Account</h3>
+
+@using Core
+
+@inject Settings Settings
+
+@if (Settings.IsUserLoggedIn())
+{
+    <div>Username: <strong>@Settings.GetUserName()</strong></div>
+    <NavLink class="nav-link" href="">
+        <button class="btn btn-outline-danger" @onclick="@Logout">Logout</button>
+    </NavLink>
+}
+
+@code
+{
+    private void Logout()
+    {
+        Settings.LogoutUser();
+    }
+}
+

@@ -75,20 +75,6 @@ using WinAuth.Shared;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
-using System.Security.Principal;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
-using Core;
-
-#line default
-#line hidden
-#nullable disable
     public partial class MainLayout : LayoutComponentBase
     {
         #pragma warning disable 1998
@@ -96,43 +82,6 @@ using Core;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 26 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Shared\MainLayout.razor"
-       
-    private AuthenticationState authState;
-
-    private WindowsIdentity windowsIdentity;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Settings.UseWindowsAuthentication())
-        {
-            // go directly to home page
-            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            windowsIdentity = (WindowsIdentity)authState.User.Identity;
-
-            Settings.LoginUser(windowsIdentity);
-        }
-
-        if (!Settings.UseWindowsAuthentication() && !Settings.IsUserLoggedIn())
-        {
-            try
-            {
-                NavigationManager.NavigateTo("/signin"); // error
-            }
-            catch (NavigationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-    }
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
     }
 }
 #pragma warning restore 1591

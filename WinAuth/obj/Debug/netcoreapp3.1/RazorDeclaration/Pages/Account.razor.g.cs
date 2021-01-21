@@ -76,22 +76,14 @@ using WinAuth.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\SignIn.razor"
+#line 5 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Account.razor"
 using Core;
 
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 5 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\SignIn.razor"
-using DataAccess;
-
-#line default
-#line hidden
-#nullable disable
-    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(PublicLayout))]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/signin")]
-    public partial class SignIn : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/account")]
+    public partial class Account : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -99,37 +91,17 @@ using DataAccess;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\SignIn.razor"
-       
-    private string username { get; set; }
-    private string password { get; set; }
-
-    private string errorMessage { get; set; }
-
-    private void SignInUser()
+#line 18 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Account.razor"
+ 
+    private void Logout()
     {
-        if (SqlDataAccess.VerifySqlConnection(username, password))
-        {
-            Console.WriteLine("connection open");
-
-            Settings.LoginUser(username, password, DateTime.Now);
-
-            NavigationManager.NavigateTo("/", forceLoad: true);
-            // StateHasChanged();
-        }
-        else
-        {
-            errorMessage = "Wrong username or password";
-            StateHasChanged();
-        }
+        Settings.LogoutUser();
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISqlDataAccess SqlDataAccess { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private Settings Settings { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }
 }
 #pragma warning restore 1591

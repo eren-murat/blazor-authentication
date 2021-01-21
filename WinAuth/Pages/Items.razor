@@ -22,10 +22,10 @@
     }
     else
     {
-        <input type="button" @onclick="CreateNewComponent" value="New Component" />
-        <input type="button" @onclick="Edit" value="Edit" />
-        <input type="button" @onclick="SaveAllComponents" value="Save" />
-        <input type="button" @onclick="ResetAllPositions" value="Reset Positions" />
+        <button class="btn btn-outline-dark" @onclick=@CreateNewComponent>New Component</button>
+        <button class="btn btn-outline-dark" @onclick=@Edit>Edit</button>
+        <button class="btn btn-outline-dark" @onclick=@SaveAllComponents>Save</button>
+        <button class="btn btn-outline-dark" @onclick=@ResetAllPositions>Reset</button>
 
         <div style="margin-top: 5px;">
             <p>

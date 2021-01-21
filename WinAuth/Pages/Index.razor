@@ -1,21 +1,115 @@
 ﻿@page "/"
 
+@using System.Security.Principal;
 @using Core
+@using DataAccess
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject Settings Settings
+@inject ISqlDataAccess SqlDataAccess
 
-<h1>Hello, world!</h1>
+<h1>Home page</h1>
 
 @if (Settings.IsUserLoggedIn())
 {
     <p>
-        Welcome to our new app, @Settings.GetUserName()!
-    </p>
-}
-else
-{
-    <p>
-        You are not authenticated.
+        Welcome to our new app, <strong>@Settings.GetUserName()</strong>!
     </p>
 }
 
+@if (showModal)
+{
+    <div class="modal fade show" id="myModal" style="display: block; background-color: rgba(30,30,30,.8)" aria-modal="true" role="dialog">
+        <div class="modal-dialog" style="top: 25%">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Sign In</h4>
+                    @*<button type="button" class="close" @onclick="@ModalCancel">&times;</button>*@
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    <div style="display: inline-block; vertical-align: middle;">
+                        <b>@errorMessage</b>
+
+                        <div style="margin: 20px;">
+                            <label for="uname"><strong>Username</strong></label>
+                            <input class="input-group-text" @bind="username" placeholder="enter username" name="uname" />
+                        </div>
+
+                        <div style="margin: 20px;">
+                            <label for="pswd"><strong>Password</strong></label>
+                            <input type="password" class="input-group-text" @bind="password" placeholder="enter password" name="pswd" />
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @*<button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>*@
+                    <button type="button" class="btn btn-outline-success" @onclick=@SignInUser>Sign In</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+<hr />
+@code
+{
+    bool showModal = false;
+
+    private AuthenticationState authState;
+    private WindowsIdentity windowsIdentity;
+
+    private string username { get; set; }
+    private string password { get; set; }
+
+    private string errorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Settings.UseWindowsAuthentication())
+        {
+            // go directly to home page
+            authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            windowsIdentity = (WindowsIdentity)authState.User.Identity;
+
+            Settings.LoginUser(windowsIdentity);
+        }
+
+        if (!Settings.UseWindowsAuthentication() && !Settings.IsUserLoggedIn())
+        {
+            // show login window
+            showModal = true;
+        }
+    }
+
+    private void SignInUser()
+    {
+        if (SqlDataAccess.VerifySqlConnection(username, password))
+        {
+            Console.WriteLine("connection open");
+
+            Settings.LoginUser(username, password, DateTime.Now);
+
+            showModal = false;
+
+            StateHasChanged();
+        }
+        else
+        {
+            errorMessage = "Wrong username or password";
+            StateHasChanged();
+        }
+    }
+
+    private void ModalCancel()
+    {
+        showModal = false;
+    }
+}
