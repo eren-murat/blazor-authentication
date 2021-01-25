@@ -8,8 +8,6 @@ namespace Core.Models
 {
 	public class UserModel
 	{
-		public WindowsIdentity WindowsIdentity { get; set; }
-
 		public string Name { get; set; }
 
 		public string Password { get; set; }

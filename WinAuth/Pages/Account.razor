@@ -6,19 +6,28 @@
 
 @inject Settings Settings
 
-@if (Settings.IsUserLoggedIn())
+@if (CurrentUserService.VerifyUserIdentity() && !Settings.UseWindowsAuthentication())
 {
-    <div>Username: <strong>@Settings.GetUserName()</strong></div>
+    <div>Username: <strong>@CurrentUserService.Username</strong></div>
     <NavLink class="nav-link" href="">
         <button class="btn btn-outline-danger" @onclick="@Logout">Logout</button>
     </NavLink>
 }
+else if (Settings.UseWindowsAuthentication())
+{
+    <div>Username: <strong>@Settings.WindowsIdentity.Name</strong></div>
+}
 
 @code
 {
-    private void Logout()
+    [CascadingParameter]
+    private CurrentUserService CurrentUserService { get; set; }
+
+    private async Task Logout()
     {
-        Settings.LogoutUser();
+        Settings.LogoutUser(CurrentUserService.Username);
+
+        await CurrentUserService.Logout();
     }
 }
 

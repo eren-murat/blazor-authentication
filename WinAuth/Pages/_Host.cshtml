@@ -17,7 +17,7 @@
 </head>
 <body>
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(App)" render-mode="Server" />
     </app>
 
     <div id="blazor-error-ui">
@@ -31,6 +31,7 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    <script src="_content/Microsoft.AspNetCore.ProtectedBrowserStorage/protectedBrowserStorage.js"></script>
     <script src="_framework/blazor.server.js"></script>
     <script src="~/JsInterop.js"></script>
 </body>

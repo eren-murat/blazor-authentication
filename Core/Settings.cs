@@ -3,6 +3,7 @@ using System.Security.Principal;
 using System.Security;
 using System;
 using Core.Models;
+using System.Collections.Generic;
 
 namespace Core
 {
@@ -10,91 +11,70 @@ namespace Core
 	{
 		private readonly IConfiguration config;
 		private string connectionStringName { get; set; } = "BasicLogin";
-		private UserModel currentUser { get; set; }
+		public WindowsIdentity WindowsIdentity { get; set; }
+
+		private List<UserModel> activeUsers { get; set; }
 
 		public Settings(IConfiguration configuration)
 		{
 			config = configuration;
-			currentUser = new UserModel();
+			activeUsers = new List<UserModel>();
+		}
+
+		public int FindUser(string username)
+		{
+			return activeUsers.FindIndex(user => user.Name == username);
 		}
 
 		public void LoginUser(WindowsIdentity windowsId)
 		{
-			currentUser.WindowsIdentity = windowsId;
-			currentUser.Name = windowsId.Name;
-			currentUser.IsLoggedIn = true;
+			WindowsIdentity = windowsId;
 		}
 
 		public void LoginUser(string name, string password, DateTime loginTime)
 		{
-			currentUser = new UserModel
+			activeUsers.Add(new UserModel
 			{
 				Name = name,
 				Password = password,
 				IsLoggedIn = true,
 				LoginTime = loginTime
-			};
+			});
 		}
 
-		public void LogoutUser()
+		public void LogoutUser(string username)
 		{
-			currentUser = new UserModel
-			{
-				IsLoggedIn = false
-			};
-		}
+			var index = activeUsers.FindIndex(user => user.Name == username);
 
-		public bool IsUserLoggedIn()
-		{
-			if (UseWindowsAuthentication())
+			if (index != -1)
 			{
-				return currentUser.IsLoggedIn;
-			}
-			else
-			{
-				return (currentUser.IsLoggedIn && (DateTime.Now - currentUser.LoginTime).Hours < 8);
+				activeUsers.RemoveAt(index);
 			}
 		}
 
-		public string GetUserName()
+		public bool IsUserActiveOnAnotherDevice(string username)
 		{
-			return currentUser.Name;
-		}
-
-		public DateTime GetLoginTime()
-		{
-			return currentUser.LoginTime;
+			return FindUser(username) >= 0;
 		}
 
 		public WindowsIdentity GetWindowsIdentity()
 		{
-			return currentUser.WindowsIdentity;
+			return WindowsIdentity;
 		}
 
-		public string GetConnectionString()
+		public string GetConnectionString(string uid, string  pwsd)
 		{
 			string connectionString = config.GetConnectionString(connectionStringName);
 
-			if (connectionStringName == "BasicLogin")
-			{
-				connectionString = connectionString.Replace("placeholderName", currentUser.Name);
-				connectionString = connectionString.Replace("placeholderPass", currentUser.Password);
-			}
+			connectionString = connectionString.Replace("placeholderName", uid);
+			connectionString = connectionString.Replace("placeholderPass", pwsd);
 
 			return connectionString;
 		}
 
-		public string GetTestConnectionString(string uid, string  pwsd)
+		public string GetWindowsConnectionString()
 		{
-			string connectionString = config.GetConnectionString(connectionStringName);
-
-			if (connectionStringName == "BasicLogin")
-			{
-				connectionString = connectionString.Replace("placeholderName", uid);
-				connectionString = connectionString.Replace("placeholderPass", pwsd);
-			}
-
-			return connectionString;
+			return config.GetConnectionString(connectionStringName);
 		}
 
 		public bool UseWindowsAuthentication()

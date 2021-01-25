@@ -76,6 +76,13 @@ using WinAuth.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
+using Microsoft.AspNetCore.ProtectedBrowserStorage;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Components\DraggableControl.razor"
 using DataAccess.Models;
 

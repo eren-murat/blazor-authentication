@@ -76,6 +76,13 @@ using WinAuth.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
+using Microsoft.AspNetCore.ProtectedBrowserStorage;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Index.razor"
 using System.Security.Principal;
 
@@ -105,8 +112,11 @@ using DataAccess;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 63 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Index.razor"
+#line 76 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Index.razor"
  
+    [CascadingParameter]
+    private CurrentUserService CurrentUserService { get; set; }
+
     bool showModal = false;
 
     private AuthenticationState authState;
@@ -128,28 +138,40 @@ using DataAccess;
             Settings.LoginUser(windowsIdentity);
         }
 
-        if (!Settings.UseWindowsAuthentication() && !Settings.IsUserLoggedIn())
+        if (!Settings.UseWindowsAuthentication())
         {
-            // show login window
-            showModal = true;
+            showModal = !CurrentUserService.VerifyUserIdentity();
         }
     }
 
-    private void SignInUser()
+    private async void SignInUser()
     {
         if (SqlDataAccess.VerifySqlConnection(username, password))
         {
             Console.WriteLine("connection open");
 
-            Settings.LoginUser(username, password, DateTime.Now);
+            if (Settings.IsUserActiveOnAnotherDevice(username))
+            {
+                // user is already logged in
+                errorMessage = "Already logged in on another device!";
 
-            showModal = false;
+            }
+            else
+            {
+                CurrentUserService.Username = username;
+                CurrentUserService.Password = password;
+                await CurrentUserService.SaveChangesAsync();
 
-            StateHasChanged();
+                Settings.LoginUser(username, password, DateTime.Now);
+
+                showModal = false;
+
+                StateHasChanged();
+            }
         }
         else
         {
-            errorMessage = "Wrong username or password";
+            errorMessage = "Wrong username or password!";
             StateHasChanged();
         }
     }

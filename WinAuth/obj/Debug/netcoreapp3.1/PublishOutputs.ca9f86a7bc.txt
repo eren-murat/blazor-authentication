@@ -22,6 +22,7 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubT
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\WinAuth.pdb
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Dapper.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.ProtectedBrowserStorage.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -44,5 +45,6 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubT
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\DataAccess.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\Core.pdb
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\DataAccess.pdb
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\wwwroot\_content\Microsoft.AspNetCore.ProtectedBrowserStorage\protectedBrowserStorage.js
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\WinAuth.Views.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\PubTmp\Out\WinAuth.Views.pdb

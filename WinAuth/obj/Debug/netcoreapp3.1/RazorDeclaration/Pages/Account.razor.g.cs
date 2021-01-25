@@ -76,6 +76,13 @@ using WinAuth.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
+using Microsoft.AspNetCore.ProtectedBrowserStorage;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 5 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Account.razor"
 using Core;
 
@@ -91,11 +98,16 @@ using Core;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 18 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Account.razor"
+#line 22 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Account.razor"
  
-    private void Logout()
+    [CascadingParameter]
+    private CurrentUserService CurrentUserService { get; set; }
+
+    private async Task Logout()
     {
-        Settings.LogoutUser();
+        Settings.LogoutUser(CurrentUserService.Username);
+
+        await CurrentUserService.Logout();
     }
 
 #line default

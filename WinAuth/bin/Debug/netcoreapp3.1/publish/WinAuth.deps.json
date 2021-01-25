@@ -29,6 +29,7 @@
           "DataAccess": "1.0.0",
           "Microsoft.AspNetCore.Authentication.OpenIdConnect": "3.1.0",
           "Microsoft.AspNetCore.Components.Authorization": "3.1.0",
+          "Microsoft.AspNetCore.ProtectedBrowserStorage": "0.1.0-alpha.19521.1",
           "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
           "System.Data.SqlClient": "4.8.2",
           "System.Security.Principal.Windows": "5.0.0",
@@ -375,6 +376,17 @@
         }
       },
       "Microsoft.AspNetCore.Metadata/3.1.0": {},
+      "Microsoft.AspNetCore.ProtectedBrowserStorage/0.1.0-alpha.19521.1": {
+        "runtime": {
+          "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.100.19.52101"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -2804,6 +2816,13 @@
       "sha512": "sha512-ZiNCjglz4kR2OGElM2u/S6cS1ArAxE6lP4BeniCZcr6l+ACzslKgcPGOTY8/Glppx6CDzMKfmyqV+VbFh5CyjQ==",
       "path": "microsoft.aspnetcore.metadata/3.1.0",
       "hashPath": "microsoft.aspnetcore.metadata.3.1.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.ProtectedBrowserStorage/0.1.0-alpha.19521.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P81qtHhl6KXr+TCm5qfCxkhFxkGtALmY3bNcraKX6rPGMbPMBGi9mIeCyUZVmpzIVkD1ocUfuRqiob05jR3hUA==",
+      "path": "microsoft.aspnetcore.protectedbrowserstorage/0.1.0-alpha.19521.1",
+      "hashPath": "microsoft.aspnetcore.protectedbrowserstorage.0.1.0-alpha.19521.1.nupkg.sha512"
     },
     "Microsoft.CSharp/4.3.0": {
       "type": "package",

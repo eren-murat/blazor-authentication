@@ -69,6 +69,13 @@ using WinAuth.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\_Imports.razor"
+using Microsoft.AspNetCore.ProtectedBrowserStorage;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
 using DataAccess;
 
@@ -121,6 +128,9 @@ using Core;
 #nullable restore
 #line 194 "C:\Users\eren.murat\source\repos\blazor-app\WinAuth\Pages\Items.razor"
        
+    [CascadingParameter]
+    private CurrentUserService CurrentUserService { get; set; }
+
     private IEnumerable<ObjModel> objects;
 
     private List<ObjModExtended> rows = new List<ObjModExtended>();
@@ -143,35 +153,33 @@ using Core;
 
     protected override async Task OnInitializedAsync()
     {
-        if (Settings.IsUserLoggedIn())
+
+        user = await SqlDataAccess.GetSqlUsername(CurrentUserService.Username, CurrentUserService.Password);
+
+        objects = await SqlDataAccess.LoadData(CurrentUserService.Username, CurrentUserService.Password);
+
+        int idCount = 0;
+
+        foreach (var item in objects)
         {
-            user = await SqlDataAccess.GetSqlUsername();
+            ObjModExtended temp = new ObjModExtended();
 
-            objects = await SqlDataAccess.LoadData();
+            temp.CopyFields(CurrentUserService.Username, CurrentUserService.Password, item, SqlDataAccess);
 
-            int idCount = 0;
+            temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(CurrentUserService.Username, CurrentUserService.Password, item.Id);
+            temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(CurrentUserService.Username, CurrentUserService.Password, item.Id);
 
-            foreach (var item in objects)
-            {
-                ObjModExtended temp = new ObjModExtended();
+            ++idCount;
+            temp.ProprietatiLabel.IdHtml = idCount;
+            ++idCount;
+            temp.ProprietatiControl.IdHtml = idCount;
 
-                temp.CopyFields(item, SqlDataAccess);
+            // Console.WriteLine(temp.ProprietatiLabel.IdHtml + " " + temp.ProprietatiLabel.TopOffset + " " + temp.ProprietatiLabel.Color);
 
-                temp.ProprietatiLabel = await SqlDataAccess.GetLabelPropertyByID(item.Id);
-                temp.ProprietatiControl = await SqlDataAccess.GetControlPropertyByID(item.Id);
-
-                ++idCount;
-                temp.ProprietatiLabel.IdHtml = idCount;
-                ++idCount;
-                temp.ProprietatiControl.IdHtml = idCount;
-
-                // Console.WriteLine(temp.ProprietatiLabel.IdHtml + " " + temp.ProprietatiLabel.TopOffset + " " + temp.ProprietatiLabel.Color);
-
-                rows.Add(temp);
-            }
-
-            editable = true;
+            rows.Add(temp);
         }
+
+        editable = true;
     }
 
     private void CreateNewComponent()
@@ -284,13 +292,15 @@ using Core;
             foreach (var item in rows)
             {
                 // save all changes to db
-                SqlDataAccess.UpdateLabelProperty(item.ProprietatiLabel, item.Id);
-                SqlDataAccess.UpdateControlProperty(item.ProprietatiControl, item.Id);
+                SqlDataAccess.UpdateLabelProperty(CurrentUserService.Username, CurrentUserService.Password, item.ProprietatiLabel, item.Id);
+                SqlDataAccess.UpdateControlProperty(CurrentUserService.Username, CurrentUserService.Password, item.ProprietatiControl, item.Id);
             }
 
             editNow = false;
             reset = false;
         }
+
+        StateHasChanged();
     }
 
     private void ResetAllPositions()

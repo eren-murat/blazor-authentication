@@ -32,6 +32,8 @@ namespace WinAuth
 			services.AddTransient<ISqlDataAccess, SqlDataAccess>((_) => new SqlDataAccess(settings));
 
 			services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+
+			services.AddProtectedBrowserStorage();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

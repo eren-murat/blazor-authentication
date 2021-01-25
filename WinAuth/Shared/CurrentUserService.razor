@@ -1,0 +1,55 @@
+﻿@using DataAccess
+@using Core 
+
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject ISqlDataAccess SqlDataAccess
+
+
+@if (isLoaded)
+{
+    <CascadingValue Value="@this">
+        @ChildContent
+    </CascadingValue>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool isLoaded;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public string Username { get; set; }
+    public string Password { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Username = await ProtectedSessionStore.GetAsync<string>("uname");
+        Username = await ProtectedSessionStore.GetAsync<string>("pwsd");
+
+        isLoaded = true;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await ProtectedSessionStore.SetAsync("uname", Username);
+        await ProtectedSessionStore.SetAsync("pswd", Username);
+    }
+
+    public bool VerifyUserIdentity()
+    {
+        return SqlDataAccess.VerifySqlConnection(Username, Password);
+    }
+
+    public async Task Logout()
+    {
+        Username = "";
+        Password = "";
+
+        await ProtectedSessionStore.SetAsync("uname", Username);
+        await ProtectedSessionStore.SetAsync("pswd", Username);
+    }
+}

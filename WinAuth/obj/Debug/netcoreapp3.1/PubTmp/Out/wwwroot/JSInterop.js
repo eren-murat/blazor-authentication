@@ -157,7 +157,7 @@ function draggable(dotNetObject) {
     function dragEnd(e) {
         if (activeItem !== null) {
 
-            if (type === "item-label" || type === "item-control" || type === "details") {
+            if (type === "item-label" || type === "item-control") {
                 activeItem.initialX = activeItem.currentX;
                 activeItem.initialY = activeItem.currentY;
 
@@ -183,7 +183,7 @@ function draggable(dotNetObject) {
     function drag(e) {
         if (active) {
 
-            if (type === "item-label" || type === "item-control" || type === "details") {
+            if (type === "item-label" || type === "item-control") {
                 activeItem.currentX = e.clientX - activeItem.initialX + Math.trunc(activeItem.xOffset);
                 activeItem.currentY = e.clientY - activeItem.initialY + Math.trunc(activeItem.yOffset);
 
@@ -210,6 +210,8 @@ function draggable(dotNetObject) {
     }
 }
 
+
+// NOT USED YET
 function resizable() {
 
     var container = document.getElementById("container");

@@ -22,9 +22,9 @@ namespace DataAccess
 			_settings = settings;
 		}
 
-		public bool VerifySqlConnection(string uid, string pwsd)
+		public bool VerifySqlConnection(string uid, string pswd)
 		{
-			string connectionString = _settings.GetTestConnectionString(uid, pwsd);
+			string connectionString = _settings.GetConnectionString(uid, pswd);
 
 			SqlConnection connection = new SqlConnection(connectionString);
 
@@ -39,7 +39,7 @@ namespace DataAccess
 			return connection.State == ConnectionState.Open;
 		}
 
-		public async Task<List<int>> GetComboboxList(int id)
+		public async Task<List<int>> GetComboboxList(string uid, string pswd, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -47,7 +47,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<List<int>>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					IEnumerable<int> elems = new List<int>();
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -63,7 +63,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				IEnumerable<int> elems = new List<int>();
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -79,7 +79,7 @@ namespace DataAccess
 
 		}
 
-		public async Task<Properties> GetControlPropertyByID(int id)
+		public async Task<Properties> GetControlPropertyByID(string uid, string pswd, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -87,7 +87,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<Properties>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					Properties properties = new Properties();
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -102,7 +102,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				Properties properties = new Properties();
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -116,7 +116,7 @@ namespace DataAccess
 			}
 		}
 
-		public async Task<ObjModel> GetDataById(int id)
+		public async Task<ObjModel> GetDataById(string uid, string pswd, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -124,7 +124,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<ObjModel>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					ObjModel objectResult = new ObjModel();
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -139,7 +139,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				ObjModel objectResult = new ObjModel();
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -154,7 +154,7 @@ namespace DataAccess
 
 		}
 
-		public async Task<Properties> GetLabelPropertyByID(int id)
+		public async Task<Properties> GetLabelPropertyByID(string uid, string pswd, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -162,7 +162,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<Properties>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					Properties properties = new Properties();
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -177,7 +177,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				Properties properties = new Properties();
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -192,7 +192,7 @@ namespace DataAccess
 			
 		}
 
-		public async Task<List<ObjModel>> LoadData()
+		public async Task<List<ObjModel>> LoadData(string uid, string pswd)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -200,7 +200,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<List<ObjModel>>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					IEnumerable<ObjModel> objects;
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -215,7 +215,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				IEnumerable<ObjModel> objects;
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -229,7 +229,7 @@ namespace DataAccess
 			}
 		}
 
-		public void UpdateControlProperty(Properties properties, int id)
+		public void UpdateControlProperty(string uid, string pswd, Properties properties, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -237,7 +237,7 @@ namespace DataAccess
 
 				WindowsIdentity.RunImpersonated(windowsIdentityToken, () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 
 					try
 					{
@@ -269,7 +269,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 
 				try
 				{
@@ -301,7 +301,7 @@ namespace DataAccess
 			
 		}
 
-		public void UpdateLabelProperty(Properties properties, int id)
+		public void UpdateLabelProperty(string uid, string pswd, Properties properties, int id)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -309,7 +309,7 @@ namespace DataAccess
 
 				WindowsIdentity.RunImpersonated(windowsIdentityToken, () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 
 					try
 					{
@@ -343,7 +343,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 
 				try
 				{
@@ -377,7 +377,7 @@ namespace DataAccess
 			
 		}
 
-		public async Task<bool> UpdateData(ObjModel objModel)
+		public async Task<bool> UpdateData(string uid, string pswd, ObjModel objModel)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -385,7 +385,7 @@ namespace DataAccess
 
 				await WindowsIdentity.RunImpersonated(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
 					{
@@ -408,7 +408,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
 				{
@@ -432,7 +432,7 @@ namespace DataAccess
 			return true;
 		}
 
-		public async Task<UserSqlTesting> GetSqlUsername()
+		public async Task<UserSqlTesting> GetSqlUsername(string uid, string pswd)
 		{
 			if (_settings.UseWindowsAuthentication())
 			{
@@ -440,7 +440,7 @@ namespace DataAccess
 
 				return await RunImpersonatedAsync<UserSqlTesting>(windowsIdentityToken, async () =>
 				{
-					string connectionString = _settings.GetConnectionString();
+					string connectionString = _settings.GetWindowsConnectionString();
 					IEnumerable<UserSqlTesting> users;
 
 					using (IDbConnection connection = new SqlConnection(connectionString))
@@ -454,7 +454,7 @@ namespace DataAccess
 			}
 			else
 			{
-				string connectionString = _settings.GetConnectionString();
+				string connectionString = _settings.GetConnectionString(uid, pswd);
 				IEnumerable<UserSqlTesting> users;
 
 				using (IDbConnection connection = new SqlConnection(connectionString))
@@ -465,18 +465,6 @@ namespace DataAccess
 
 				return users.ToList().ElementAt(0);
 			}
-
-
-			// not scalable
-			/*
-			var credentials = new UserCredentials("PS", "WFLservice", "@prosoft1");
-			Impersonation.RunAsUser(credentials, LogonType.Interactive, () =>
-			{
-				mockUser.Username = WindowsIdentity.GetCurrent().Name;
-
-				Console.WriteLine(mockUser.Username);
-			});
-			*/
 		}
 
 		public static Task<T> RunImpersonatedAsync<T>(SafeAccessTokenHandle safeAccessTokenHandle, Func<Task<T>> func) =>

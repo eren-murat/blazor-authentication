@@ -1,6 +1,7 @@
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinAuth.StaticWebAssets.xml
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinAuth.exe
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinAuth.deps.json
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinAuth.runtimeconfig.json
@@ -11,6 +12,7 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinA
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\WinAuth.Views.pdb
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Dapper.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.ProtectedBrowserStorage.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -42,9 +44,11 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinA
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\App.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Components\DraggableControl.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Components\DraggableLabel.razor.g.cs
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Account.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Index.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Items.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\SignOut.razor.g.cs
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\CurrentUserService.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\LoginDisplay.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\MainLayout.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\NavMenu.razor.g.cs
@@ -57,9 +61,11 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinA
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Components\DraggableControl.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Components\DraggableLabel.razor.g.cs
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Pages\Account.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Pages\Index.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Pages\Items.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Pages\SignOut.razor.g.cs
+C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Shared\CurrentUserService.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Shared\LoginDisplay.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
@@ -78,5 +84,3 @@ C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinA
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinAuth.dll
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinAuth.pdb
 C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\WinAuth.genruntimeconfig.cache
-C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Account.razor.g.cs
-C:\Users\eren.murat\source\repos\blazor-app\WinAuth\obj\Debug\netcoreapp3.1\Razor\Pages\Account.razor.g.cs

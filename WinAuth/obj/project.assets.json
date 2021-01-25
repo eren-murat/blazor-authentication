@@ -106,6 +106,24 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll": {}
         }
       },
+      "Microsoft.AspNetCore.ProtectedBrowserStorage/0.1.0-alpha.19521.1": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ],
+        "build": {
+          "buildTransitive/Microsoft.AspNetCore.ProtectedBrowserStorage.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Microsoft.AspNetCore.ProtectedBrowserStorage.props": {}
+        }
+      },
       "Microsoft.CSharp/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1249,6 +1267,25 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
         "microsoft.aspnetcore.metadata.3.1.0.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.ProtectedBrowserStorage/0.1.0-alpha.19521.1": {
+      "sha512": "P81qtHhl6KXr+TCm5qfCxkhFxkGtALmY3bNcraKX6rPGMbPMBGi9mIeCyUZVmpzIVkD1ocUfuRqiob05jR3hUA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.protectedbrowserstorage/0.1.0-alpha.19521.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "build/Microsoft.AspNetCore.ProtectedBrowserStorage.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Microsoft.AspNetCore.ProtectedBrowserStorage.props",
+        "buildTransitive/Microsoft.AspNetCore.ProtectedBrowserStorage.props",
+        "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.dll",
+        "lib/netcoreapp3.0/Microsoft.AspNetCore.ProtectedBrowserStorage.pdb",
+        "microsoft.aspnetcore.protectedbrowserstorage.0.1.0-alpha.19521.1.nupkg.sha512",
+        "microsoft.aspnetcore.protectedbrowserstorage.nuspec",
+        "staticwebassets/protectedBrowserStorage.js"
       ]
     },
     "Microsoft.CSharp/4.3.0": {
@@ -4426,6 +4463,7 @@
       "DataAccess >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 3.1.0",
       "Microsoft.AspNetCore.Components.Authorization >= 3.1.0",
+      "Microsoft.AspNetCore.ProtectedBrowserStorage >= 0.1.0-alpha.19521.1",
       "Microsoft.Extensions.Configuration.Abstractions >= 5.0.0",
       "System.Data.SqlClient >= 4.8.2",
       "System.Security.Principal.Windows >= 5.0.0"
@@ -4493,6 +4531,10 @@
           "Microsoft.AspNetCore.Components.Authorization": {
             "target": "Package",
             "version": "[3.1.0, )"
+          },
+          "Microsoft.AspNetCore.ProtectedBrowserStorage": {
+            "target": "Package",
+            "version": "[0.1.0-alpha.19521.1, )"
           },
           "Microsoft.Extensions.Configuration.Abstractions": {
             "target": "Package",
